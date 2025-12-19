@@ -1,21 +1,34 @@
-# Wireguard with iptables-legacy
+# WireGuard with iptables-legacy
 
-This is a wrapper around the official [linuxserver/wireguard](https://github.com/linuxserver/docker-wireguard) Docker image.
-It replaces `iptables` with `iptables-legacy` to support kernels without `nf_tables` support (e.g., older Synology NAS).
+[![Build Status](https://github.com/0xlnz/wireguard-iptables-legacy/actions/workflows/auto-build-on-upstream-release.yml/badge.svg)](https://github.com/0xlnz/wireguard-iptables-legacy/actions/workflows/auto-build-on-upstream-release.yml)
+[![GitHub Container Registry](https://img.shields.io/badge/GHCR-0xlnz%2Fwireguard-blue?logo=github)](https://github.com/0xlnz/wireguard-iptables-legacy/pkgs/container/wireguard)
 
-## How it works
+A wrapper around the official [linuxserver/wireguard](https://github.com/linuxserver/docker-wireguard) Docker image.
 
-The GitHub Actions workflow runs daily to check for new releases of `linuxserver/docker-wireguard`.
-If a new release is found:
-1. It builds a new image based on the upstream tag.
-2. Installs `iptables-legacy` (handling both Alpine and Debian bases).
-3. Pushes the image to GHCR.
-4. Updates `.last_upstream` in the repo to track the latest built version.
+## 🚀 Why this image?
 
-## Usage
+Standard WireGuard images often rely on `nftables`. However, some older kernels or specific NAS devices (like  **Synology DSM**) lack `nf_tables` support, leading to tunnel creation failures.
 
-Replace your image reference in `docker-compose.yml`:
+This repository runs a **daily GitHub Action** to check for new releases:
+- **Tracks** the upstream `linuxserver/wireguard` releases.
+- **Replaces** `iptables` with `iptables-legacy`.
+- **Pushes** the result to GHCR.
+
+
+## 📦 Usage
+
+Simply replace your image reference in `docker-compose.yml`. This image serves as a drop-in replacement.
 
 ```yaml
-image: ghcr.io/0xlnz/wireguard:latest
+services:
+  wireguard:
+    image: ghcr.io/0xlnz/wireguard:latest
+  ...
 ```
+
+> **Note:** For full configuration options (environment variables, volumes, etc.), please refer to the [original LinuxServer.io documentation](https://github.com/linuxserver/docker-wireguard).
+
+
+## ❤️ Credits
+
+- Based on the excellent work by [LinuxServer.io](https://www.linuxserver.io/).
