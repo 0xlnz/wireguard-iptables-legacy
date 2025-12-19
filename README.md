@@ -17,5 +17,5 @@ If a new release is found:
 Replace your image reference in `docker-compose.yml`:
 
 ```yaml
-image: ghcr.io/YOUR_USERNAME/wireguard:latest
+image: ghcr.io/0xlnz/wireguard:latest
 ```
